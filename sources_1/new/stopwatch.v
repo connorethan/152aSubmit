@@ -51,8 +51,6 @@ clock #(.start_time(0), .end_time(1_000)) my_segment_clk(.in(clk), .out(segment_
 clock #(.start_time(0), .end_time(10_000_000)) my_blink_clk(.in(clk), .out(blink_clk));
 clock #(.start_time(0), .end_time(5_000_000)) my_debounce_clk(.in(clk), .out(debounce_clk));
 
-
-
 always @(posedge segment_clk) begin
     adj_sec = sw[1];
     adj = sw[0];
@@ -108,7 +106,7 @@ always @(posedge debounce_clk) begin
        if (~has_ticked_once && ~stop_tick) begin
            has_ticked_once = 1;
            if (adj && ~adj_sec) begin
-               sec_counter = (sec_counter / 50 >= 99)
+               sec_counter = (sec_counter / 60 >= 99)
                          ? (sec_counter % 60)
                          : (sec_counter + 60);
            end else if (adj) begin
